@@ -1,6 +1,7 @@
 ﻿// Abstract Factory pattern -- Real World example
 
 using System;
+using System.Runtime.Remoting.Messaging;
 
 namespace Abstract.RealWorld
 {
@@ -32,6 +33,13 @@ namespace Abstract.RealWorld
 
             world.RunFoodChain();
 
+            // Create and run the Asia animal world
+
+            ContinentFactory asia = new AsiaFactory();
+
+            world = new AnimalWorld(asia);
+
+            world.RunFoodChain();
 
             // Wait for user input
 
@@ -67,7 +75,6 @@ namespace Abstract.RealWorld
         }
     }
 
-
     /// <summary>
     /// The 'ConcreteFactory2' class
     /// </summary>
@@ -84,6 +91,17 @@ namespace Abstract.RealWorld
         }
     }
 
+    internal class AsiaFactory : ContinentFactory
+    {
+        public override Herbivore CreateHerbivore()
+        {
+            return new Groudamanchuria();
+        }
+        public override Carnivore CreateCarnivore()
+        {
+            return new Leopardodasneves();
+        }
+    }
 
     /// <summary>
     /// The 'AbstractProductA' abstract class
@@ -118,7 +136,6 @@ namespace Abstract.RealWorld
         public override void Eat(Herbivore h)
         {
             // Eat Wildebeest
-
             Console.WriteLine(GetType().Name +
                               " eats " + h.GetType().Name);
         }
@@ -132,6 +149,19 @@ namespace Abstract.RealWorld
     {
     }
 
+    internal class Groudamanchuria : Herbivore
+    {
+    }
+
+    internal class Leopardodasneves : Carnivore
+    {
+        public override void Eat(Herbivore h)
+        {
+            //Grou-da-manchúria
+            Console.WriteLine(GetType().Name +
+                              " eats " + h.GetType().Name);
+        }
+    }
 
     /// <summary>
     /// The 'ProductB2' class
