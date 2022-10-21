@@ -18,26 +18,24 @@ namespace Adapter.RealWorld
             // Non-adapted chemical compound
 
             var unknown = new Compound("Unknown");
-
             unknown.Display();
 
 
             // Adapted chemical compounds
 
             Compound water = new RichCompound("Water");
-
             water.Display();
 
 
             Compound benzene = new RichCompound("Benzene");
-
             benzene.Display();
 
 
             Compound ethanol = new RichCompound("Ethanol");
-
             ethanol.Display();
 
+            Compound amor = new RichCompound("Amor");
+            amor.Display();
 
             // Wait for user
 
@@ -66,7 +64,6 @@ namespace Adapter.RealWorld
         {
             _chemical = chemical;
         }
-
 
         public virtual void Display()
         {
@@ -144,6 +141,9 @@ namespace Adapter.RealWorld
                     case "ethanol":
                         return -114.1f;
 
+                    case "amor":
+                        return 151156f;
+
                     default:
                         return 0f;
                 }
@@ -163,6 +163,9 @@ namespace Adapter.RealWorld
 
                     case "ethanol":
                         return 78.3f;
+
+                    case "amor":
+                        return 1556f;
 
                     default:
                         return 0f;
@@ -184,6 +187,9 @@ namespace Adapter.RealWorld
                 case "ethanol":
                     return "C2H5OH";
 
+                case "amor":
+                    return "AMOR";
+
                 default:
                     return "";
             }
@@ -202,6 +208,9 @@ namespace Adapter.RealWorld
 
                 case "ethanol":
                     return 46.0688;
+
+                case "amor":
+                    return 151.181;
 
                 default:
                     return 0d;
