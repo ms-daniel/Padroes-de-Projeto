@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bridge.RealWorld
 {
@@ -40,6 +41,9 @@ namespace Bridge.RealWorld
 
             customers.Add("Henry Velasquez");
 
+            customers.Last();
+
+            customers.Show();
 
             customers.ShowAll();
 
@@ -86,6 +90,11 @@ namespace Bridge.RealWorld
         public virtual void Prior()
         {
             _dataObject.PriorRecord();
+        }
+
+        public virtual void Last()
+        {
+            _dataObject.LastRecord();
         }
 
 
@@ -153,6 +162,8 @@ namespace Bridge.RealWorld
 
         public abstract void PriorRecord();
 
+        public abstract void LastRecord();
+
         public abstract void AddRecord(string name);
 
         public abstract void DeleteRecord(string name);
@@ -206,6 +217,10 @@ namespace Bridge.RealWorld
             }
         }
 
+        public override void LastRecord()
+        {
+            _current = _customers.LastIndexOf(_customers.Last());
+        }
 
         public override void AddRecord(string customer)
         {
@@ -232,5 +247,6 @@ namespace Bridge.RealWorld
                 Console.WriteLine(" " + customer);
             }
         }
+
     }
 }
