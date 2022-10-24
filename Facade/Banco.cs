@@ -24,7 +24,7 @@ namespace Facade.RealWorld
 
             var customer = new Customer("Ann McKinsey");
 
-            bool eligible = mortgage.IsEligible(customer, 125000);
+            bool eligible = mortgage.seeEligible(customer, 125000);
 
 
             Console.WriteLine("\n" + customer.Name +
@@ -105,21 +105,24 @@ namespace Facade.RealWorld
     }
 
 
-    /// <summary>
-    /// The 'Facade' class
-    /// </summary>
-    internal class Mortgage
+    internal class Eligible
     {
+        private Customer _customer;
+        private int _amount;
         private readonly Bank _bank = new Bank();
-
         private readonly Credit _credit = new Credit();
         private readonly Loan _loan = new Loan();
 
+        public Eligible(Customer c, int amount)
+        {
+            _customer = c;
+            _amount = amount;
+        }
 
-        public bool IsEligible(Customer cust, int amount)
+        public bool IsEligible()
         {
             Console.WriteLine("{0} applies for {1:C} loan\n",
-                              cust.Name, amount);
+                              _customer.Name, _amount);
 
 
             bool eligible = true;
@@ -127,23 +130,36 @@ namespace Facade.RealWorld
 
             // Check creditworthyness of applicant
 
-            if (!_bank.HasSufficientSavings(cust, amount))
+            if (!_bank.HasSufficientSavings(_customer, _amount))
             {
                 eligible = false;
             }
 
-            else if (!_loan.HasNoBadLoans(cust))
+            else if (!_loan.HasNoBadLoans(_customer))
             {
                 eligible = false;
             }
 
-            else if (!_credit.HasGoodCredit(cust))
+            else if (!_credit.HasGoodCredit(_customer))
             {
                 eligible = false;
             }
 
 
             return eligible;
+        }
+    }
+
+    /// <summary>
+    /// The 'Facade' class
+    /// </summary>
+    internal class Mortgage
+    {
+        private Eligible _eligible;
+        public bool seeEligible(Customer c, int amount)
+        {
+            _eligible = new Eligible(c, amount);
+            return _eligible.IsEligible();
         }
     }
 }
