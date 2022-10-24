@@ -45,6 +45,12 @@ namespace Decorator.RealWorld
             borrowvideo.Display();
 
 
+            var damagedbook = new Damaged(book);
+            damagedbook.DamagedItem("#Livro +1");
+            damagedbook.DamagedItem("#Livro +1(2)");
+
+            damagedbook.Display();
+
             // Wait for user
 
             Console.ReadKey();
@@ -208,4 +214,43 @@ namespace Decorator.RealWorld
             }
         }
     }
+
+    internal class Damaged : Decorator
+    {
+        protected List<string> damageds = new List<string>();
+
+
+        // Constructor
+
+        public Damaged(LibraryItem libraryItem)
+            : base(libraryItem)
+        {
+        }
+
+        public void DamagedItem(string name)
+        {
+            damageds.Add(name);
+
+            libraryItem.NumCopies--;
+        }
+
+
+        public void RestoredItem(string name)
+        {
+            damageds.Remove(name);
+
+            libraryItem.NumCopies++;
+        }
+
+        public override void Display()
+        {
+            base.Display();
+
+            foreach (string damaged in damageds)
+            {
+                Console.WriteLine(" damageds: " + damaged);
+            }
+        }
+    }
+
 }
