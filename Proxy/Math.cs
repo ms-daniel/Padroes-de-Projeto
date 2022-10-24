@@ -28,6 +28,8 @@ namespace Proxy.RealWorld
 
             Console.WriteLine("4 / 2 = " + proxy.Div(4, 2));
 
+            Console.WriteLine("(4/2)+(4*2)+(4+2)+(4-2) = " + proxy.All(4, 2));
+
 
             // Wait for user
 
@@ -78,6 +80,12 @@ namespace Proxy.RealWorld
             return x/y;
         }
 
+        public double All(double x, double y)
+        {
+
+            return (x/y)+(x*y)+(x+y)+(x-y);
+        }
+
         #endregion
     }
 
@@ -109,6 +117,11 @@ namespace Proxy.RealWorld
         public double Div(double x, double y)
         {
             return _math.Div(x, y);
+        }
+
+        public double All(double x, double y)
+        {
+            return _math.All(x, y);
         }
 
         #endregion
