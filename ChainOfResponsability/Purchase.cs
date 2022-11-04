@@ -21,10 +21,14 @@ namespace Chain.RealWorld
 
             Approver tammy = new President();
 
+            Approver hendrix = new ChefeImediato();
+
 
             larry.SetSuccessor(sam);
 
             sam.SetSuccessor(tammy);
+
+            tammy.SetSuccessor(hendrix);
 
 
             // Generate and process purchase requests
@@ -119,6 +123,23 @@ namespace Chain.RealWorld
         public override void ProcessRequest(Purchase purchase)
         {
             if (purchase.Amount < 100000.0)
+            {
+                Console.WriteLine("{0} approved request# {1}",
+                                  GetType().Name, purchase.Number);
+            }
+
+            else if(successor != null)
+            {
+                successor.ProcessRequest(purchase);
+            }
+        }
+    }
+
+    internal class ChefeImediato : Approver
+    {
+        public override void ProcessRequest(Purchase purchase)
+        {
+            if (purchase.Amount < 10000000.0)
             {
                 Console.WriteLine("{0} approved request# {1}",
                                   GetType().Name, purchase.Number);
