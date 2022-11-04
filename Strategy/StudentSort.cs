@@ -46,6 +46,10 @@ namespace Strategy.RealWorld
 
             studentRecords.Sort();
 
+            studentRecords.SetSortStrategy(new BubbleSort()); //criado
+
+            studentRecords.Sort();
+
 
             // Wait for user
 
@@ -104,6 +108,15 @@ namespace Strategy.RealWorld
         }
     }
 
+    internal class BubbleSort : SortStrategy
+    {
+        public override void Sort(List<string> list)
+        {
+            //list.BubbleSort(); not-implemented
+
+            Console.WriteLine("BubbleSorted list ");
+        }
+    }
 
     /// <summary>
     /// The 'Context' class
