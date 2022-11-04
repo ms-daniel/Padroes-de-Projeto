@@ -18,15 +18,19 @@ namespace Observer.RealWorld
 
             var ibm = new IBM("IBM", 120.00);
 
+            var mic = new Microsoft("Microsoft", 400.00);
+
+
+
             ibm.Attach(new Investor("Sorros"));
 
             ibm.Attach(new Investor("Berkshire"));
 
             ibm.Attach(new Investor("Dósea"));
 
-            ibm.Attach(new Investor("Kal-El"));
+            mic.Attach(new Investor("Kal-El"));
 
-            ibm.Attach(new Investor("Diana"));
+            mic.Attach(new Investor("Diana"));
 
 
             // Fluctuating prices will notify investors
@@ -38,6 +42,9 @@ namespace Observer.RealWorld
             ibm.Price = 120.50;
 
             ibm.Price = 120.75;
+
+            mic.Price = 402.59;
+            mic.Price = 399.99;
 
 
             // Wait for user
@@ -132,6 +139,16 @@ namespace Observer.RealWorld
         }
     }
 
+    internal class Microsoft : Stock
+    {
+        // Constructor
+
+        public Microsoft(string symbol, double price)
+            : base(symbol, price)
+        {
+        }
+    }
+
 
     /// <summary>
     /// The 'Observer' interface
@@ -173,3 +190,8 @@ namespace Observer.RealWorld
         #endregion
     }
 }
+
+
+/// <summary>
+/// The 'ConcreteSubject' class
+/// </summary>
