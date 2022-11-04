@@ -26,6 +26,10 @@ namespace TemplateMethod.RealWorld
 
             daoProducts.Run();
 
+            DataAccessObject daoUsuario = new Usuario();
+
+            daoUsuario.Run();
+
 
             // Wait for user
 
@@ -149,4 +153,36 @@ namespace TemplateMethod.RealWorld
             Console.WriteLine();
         }
     }
+
+    internal class Usuario : DataAccessObject
+    {
+        public override void Select()
+        {
+            string sql = "select Name from Usuarios";
+
+            var dataAdapter = new OleDbDataAdapter(
+                sql, connectionString);
+
+
+            dataSet = new DataSet();
+
+            dataAdapter.Fill(dataSet, "Usuarios");
+        }
+
+
+        public override void Process()
+        {
+            Console.WriteLine("Usuarios: ");
+
+            DataTable dataTable = dataSet.Tables["Usuarios"];
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                Console.WriteLine(row["Nome"]);
+            }
+
+            Console.WriteLine();
+        }
+    }
 }
+
