@@ -31,6 +31,10 @@ namespace Command.RealWorld
 
             user.Compute('*', 7);
 
+            user.Compute('/', 5);
+
+            user.Compute('-', 100);
+
             
 
             // Undo 4 commands
@@ -131,6 +135,9 @@ namespace Command.RealWorld
                 case '*':
                     return '/';
 
+                case '/':
+                    return '*';
+
                 default:
                     throw new
                         ArgumentException("@operator");
@@ -161,6 +168,10 @@ namespace Command.RealWorld
 
                 case '*':
                     _curr *= operand;
+                    break;
+
+                case '/':
+                    _curr /= operand;
                     break;
             }
 
