@@ -28,6 +28,8 @@ namespace State.RealWorld
 
             account.Deposit(550.0);
 
+            account.Deposit(100000.0);
+
             account.PayInterest();
 
             account.Withdraw(2000.00);
@@ -266,7 +268,7 @@ namespace State.RealWorld
 
             lowerLimit = 1000.0;
 
-            upperLimit = 10000000.0;
+            upperLimit = 100000.0;
         }
 
 
@@ -304,6 +306,82 @@ namespace State.RealWorld
             else if (balance < lowerLimit)
             {
                 account.State = new SilverState(this);
+            }
+            else if (balance > upperLimit)
+            {
+                account.State = new DiamondState(this);
+            }
+
+        }
+    }
+
+
+    internal class DiamondState : State
+    {
+        // Overloaded constructors
+
+        public DiamondState(State state)
+            : this(state.Balance, state.Account)
+        {
+        }
+
+
+        public DiamondState(double balance, Account account)
+        {
+            this.balance = balance;
+
+            this.account = account;
+
+            Initialize();
+        }
+
+
+        private void Initialize()
+        {
+            // Should come from a database
+
+            interest = 0.08;
+
+            lowerLimit = 100000.0;
+
+            upperLimit = 90000000000.0;
+        }
+
+
+        public override void Deposit(double amount)
+        {
+            balance += amount;
+
+            StateChangeCheck();
+        }
+
+
+        public override void Withdraw(double amount)
+        {
+            balance -= amount;
+
+            StateChangeCheck();
+        }
+
+
+        public override void PayInterest()
+        {
+            balance += interest * balance;
+
+            StateChangeCheck();
+        }
+
+
+        private void StateChangeCheck()
+        {
+            if (balance < 0.0)
+            {
+                account.State = new RedState(this);
+            }
+
+            else if (balance < lowerLimit)
+            {
+                account.State = new GoldState(this);
             }
         }
     }
